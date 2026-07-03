@@ -1,7 +1,7 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
 
-Sitemap: https://linxmedia.ng/sitemap.xml
+Sitemap: https://www.linxmedia.com.ng/sitemap.xml
 
 
 
