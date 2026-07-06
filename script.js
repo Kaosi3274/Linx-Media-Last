@@ -1,4 +1,4 @@
-﻿if ("scrollRestoration" in history) {
+if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
 
@@ -265,8 +265,81 @@ document.querySelectorAll("[data-whatsapp-form]").forEach((form) => {
     });
 
     const message = encodeURIComponent(lines.join("\n"));
-    window.open(`https://wa.me/2348079449956?text=${message}`, "_blank", "noopener");
+    window.open(`https://wa.me/2349079076162?text=${message}`, "_blank", "noopener");
   });
+});
+
+const galleryCards = Array.from(document.querySelectorAll(".project-card"));
+const galleryLightbox = document.querySelector("[data-gallery-lightbox]");
+const galleryImage = document.querySelector("[data-gallery-image]");
+const galleryCaption = document.querySelector("[data-gallery-caption]");
+const galleryClose = document.querySelector("[data-gallery-close]");
+const galleryPrev = document.querySelector("[data-gallery-prev]");
+const galleryNext = document.querySelector("[data-gallery-next]");
+let galleryIndex = 0;
+
+function showGalleryImage(index) {
+  if (!galleryCards.length || !galleryImage || !galleryCaption) return;
+
+  galleryIndex = (index + galleryCards.length) % galleryCards.length;
+  const selectedCard = galleryCards[galleryIndex];
+  const selectedImage = selectedCard.querySelector("img");
+  const selectedCaption = selectedCard.querySelector("figcaption")?.textContent?.trim() || selectedImage?.alt || "";
+
+  galleryImage.src = selectedImage?.src || "";
+  galleryImage.alt = selectedImage?.alt || selectedCaption;
+  galleryCaption.textContent = selectedCaption;
+}
+
+function openGallery(index) {
+  if (!galleryLightbox) return;
+
+  showGalleryImage(index);
+  galleryLightbox.classList.add("is-open");
+  galleryLightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("menu-open");
+  galleryClose?.focus();
+}
+
+function closeGallery() {
+  if (!galleryLightbox) return;
+
+  galleryLightbox.classList.remove("is-open");
+  galleryLightbox.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("menu-open");
+  galleryCards[galleryIndex]?.focus();
+}
+
+galleryCards.forEach((card, index) => {
+  card.addEventListener("click", () => openGallery(index));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openGallery(index);
+    }
+  });
+});
+
+galleryClose?.addEventListener("click", closeGallery);
+galleryPrev?.addEventListener("click", () => showGalleryImage(galleryIndex - 1));
+galleryNext?.addEventListener("click", () => showGalleryImage(galleryIndex + 1));
+
+galleryLightbox?.addEventListener("click", (event) => {
+  if (event.target === galleryLightbox) {
+    closeGallery();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (!galleryLightbox?.classList.contains("is-open")) return;
+
+  if (event.key === "Escape") {
+    closeGallery();
+  } else if (event.key === "ArrowLeft") {
+    showGalleryImage(galleryIndex - 1);
+  } else if (event.key === "ArrowRight") {
+    showGalleryImage(galleryIndex + 1);
+  }
 });
 
 

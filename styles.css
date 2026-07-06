@@ -1529,6 +1529,12 @@ img {
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 22px 54px rgba(7, 17, 15, 0.12);
+  cursor: zoom-in;
+}
+
+.project-card:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 4px;
 }
 
 .project-card img {
@@ -1556,6 +1562,90 @@ img {
   font-weight: 900;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+}
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 24px 32px;
+  background: rgba(7, 17, 15, 0.92);
+}
+
+.gallery-lightbox.is-open {
+  display: flex;
+}
+
+.gallery-lightbox-frame {
+  display: grid;
+  gap: 14px;
+  width: min(1080px, 100%);
+  margin: 0;
+}
+
+.gallery-lightbox-frame img {
+  width: 100%;
+  max-height: 78vh;
+  border-radius: 8px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+}
+
+.gallery-lightbox-frame figcaption {
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.gallery-lightbox-close,
+.gallery-lightbox-nav {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.gallery-lightbox-close:hover,
+.gallery-lightbox-nav:hover {
+  color: var(--lime);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.gallery-lightbox-close {
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.gallery-lightbox-nav {
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 42px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox-prev {
+  left: 18px;
+}
+
+.gallery-lightbox-next {
+  right: 18px;
 }
 
 .video-gallery {
@@ -2056,6 +2146,24 @@ img {
 
   .hero-led .hero-actions {
     justify-content: center;
+  }
+
+  .gallery-lightbox {
+    padding: 76px 14px 24px;
+  }
+
+  .gallery-lightbox-nav {
+    top: auto;
+    bottom: 18px;
+    transform: none;
+  }
+
+  .gallery-lightbox-prev {
+    left: calc(50% - 58px);
+  }
+
+  .gallery-lightbox-next {
+    right: calc(50% - 58px);
   }
 
   .hero-led-gallery {
